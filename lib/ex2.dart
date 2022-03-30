@@ -12,8 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title:
-          'Exercice 2',
+      title: 'Exercice 2',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -57,8 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Map<String, String> _differenceBetweenDates(DateTime date1, DateTime date2) {
     Map<String, String> difference = {};
 
-    difference['year'] =
-        (date1.year - date2.year).abs().toString().padLeft(2, '0');
+    difference['year'] = (date1.year - date2.year).toString().padLeft(2, '0');
     difference['month'] =
         (date1.month - date2.month).abs().toString().padLeft(2, '0');
     difference['day'] =

@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: [
                     const Text(
-                      'Compteur',
+                      'Compteur :',
                       style: TextStyle(
                           fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
