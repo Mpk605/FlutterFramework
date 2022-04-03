@@ -10,8 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title:
-          'Exercice 1',
+      title: 'Exercice 1',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -90,32 +89,34 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     const Padding(padding: EdgeInsets.only(bottom: 16.0)),
                     Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              icon: const Icon(Icons.remove),
-                              onPressed: () => _incrementCounter(-1),
-                              tooltip: 'Decrement'),
-                          Card(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 16.0, left: 16.0),
-                              child: Text(
-                                '$_counter',
-                                style: Theme.of(context).textTheme.headline4,
-                              ),
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.remove),
+                          onPressed: () => _incrementCounter(-1),
+                          tooltip: 'Decrement',
+                        ),
+                        Card(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(right: 16.0, left: 16.0),
+                            child: Text(
+                              '$_counter',
+                              style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
-                          IconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed: () => _incrementCounter(1),
-                              tooltip: 'Increment'),
-                        ]),
+                        ),
+                        IconButton(
+                            icon: const Icon(Icons.add),
+                            onPressed: () => _incrementCounter(1),
+                            tooltip: 'Increment'),
+                      ],
+                    ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
