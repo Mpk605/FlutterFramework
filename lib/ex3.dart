@@ -77,11 +77,13 @@ class NewJobOfferPage extends StatefulWidget {
 class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
   // TextEditControllers
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _salaryController = TextEditingController();
+  final TextEditingController _annualSalaryController = TextEditingController();
+  final TextEditingController _monthlySalaryController = TextEditingController();
   final TextEditingController _detailsController = TextEditingController();
 
   var _nameValidate = false;
-  var _salaryValidate = false;
+  var _annualSalaryValidate = false;
+  var _monthlySalaryValidate = false;
 
   // Hive
   late Box _box;
@@ -89,6 +91,8 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
   int _radioStatus = 0;
 
   void _handleStatusRadioButtons(int? value) {
+    _monthlySalaryController.text = ((int.parse(_annualSalaryController.text) * ((value == 0) ? 0.75 : 0.78)) / 12).toString();
+
     setState(() {
       _radioStatus = value ?? 0;
     });
@@ -101,7 +105,8 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
     _radioStatus = widget.status;
 
     _nameController.text = widget.companyName;
-    _salaryController.text = widget.annualSalary.toString();
+    _annualSalaryController.text = widget.annualSalary.toString();
+    _monthlySalaryController.text = ((widget.annualSalary * ((widget.status == 0) ? 0.75 : 0.78)) / 12).toString();
     _detailsController.text = widget.details;
   }
 
@@ -109,7 +114,7 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Job Offer'),
+        title: const Text('Nouvelle offre de Job'),
       ),
       body: Center(
         child: Padding(
@@ -129,23 +134,59 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 4.0),
-                  child: TextFormField(
-                    controller: _salaryController,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                      labelText: 'Salaire Annuel Brut',
-                      errorText: (_salaryValidate)
-                          ? 'Veuillez entrer un salaire'
-                          : null,
-                      border: const OutlineInputBorder(),
-                      suffixIcon: const Icon(
-                        Icons.euro_symbol,
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: TextFormField(
+                          controller: _annualSalaryController,
+                          onChanged: (text) {
+                            _monthlySalaryController.text = ((int.parse(text) * ((_radioStatus == 0) ? 0.75 : 0.78)) / 12).toString();
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                            labelText: 'Salaire Annuel Brut',
+                            errorText: (_annualSalaryValidate)
+                                ? 'Veuillez entrer un salaire'
+                                : null,
+                            border: const OutlineInputBorder(),
+                            suffixIcon: const Icon(
+                              Icons.euro_symbol,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 4.0),
+                        child: TextFormField(
+                          controller: _monthlySalaryController,
+                          onChanged: (text) {
+                            _annualSalaryController.text = ((int.parse(text) / ((_radioStatus == 0) ? 0.75 : 0.78)) * 12).toString();
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                            labelText: 'Salaire Mensuel Net',
+                            errorText: (_monthlySalaryValidate)
+                                ? 'Veuillez entrer un salaire'
+                                : null,
+                            border: const OutlineInputBorder(),
+                            suffixIcon: const Icon(
+                              Icons.euro_symbol,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -206,16 +247,16 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
                         _nameValidate = true;
                       }
 
-                      if (_salaryController.text.isEmpty) {
-                        _salaryValidate = true;
+                      if (_annualSalaryController.text.isEmpty) {
+                        _annualSalaryValidate = true;
                       }
 
                       if (_nameController.text.isNotEmpty &&
-                          _salaryController.text.isNotEmpty) {
+                          _annualSalaryController.text.isNotEmpty) {
                         if (widget.position == -1) {
                           _box.add(JobOffer(
                               companyName: _nameController.text,
-                              salary: int.parse(_salaryController.text),
+                              salary: int.parse(_annualSalaryController.text),
                               status: _radioStatus,
                               details: _detailsController.text));
                         } else {
@@ -223,7 +264,7 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
                               widget.position,
                               JobOffer(
                                   companyName: _nameController.text,
-                                  salary: int.parse(_salaryController.text),
+                                  salary: int.parse(_annualSalaryController.text),
                                   status: _radioStatus,
                                   details: _detailsController.text));
                         }
@@ -301,7 +342,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
                     Text(
-                      'Your job history is empty',
+                      "Vous n'avez aucun jobs",
                       style: TextStyle(fontSize: 20),
                     )
                   ],
@@ -310,7 +351,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         backgroundColor: const Color(0xff03dac6),
         foregroundColor: Colors.black,
         onPressed: () {
@@ -329,7 +370,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 })
               });
         },
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
+        label: const Text('Ajouter nouveau job'),
       ),
     );
   }
@@ -480,7 +522,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     icon: const Icon(
                                       Icons.delete_outlined,
                                     ),
-                                    label: const Text('Delete'),
+                                    label: const Text('Supprimer'),
                                   ),
                                   flex: 1,
                                 ),
@@ -502,7 +544,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     icon: const Icon(
                                       Icons.edit_outlined,
                                     ),
-                                    label: const Text('Edit'),
+                                    label: const Text('Modifier'),
                                   ),
                                   flex: 1,
                                 ),
@@ -521,7 +563,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TextButton.icon(
                 onPressed: () {
                   setState(() {
-                    _displayDetails[_companyName] = (_displayDetails[_companyName] != null) ? !_displayDetails[_companyName] : true;
+                    _displayDetails[_companyName] =
+                        (_displayDetails[_companyName] != null)
+                            ? !_displayDetails[_companyName]
+                            : true;
                   });
                 },
                 icon: (_displayDetails[_companyName] ?? false)
