@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -35,6 +35,7 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
 
   var _nameValidate = false;
   var _salaryValidate = false;
+  double _sliderValue = 0;
 
   int _radioStatus = 0;
 
@@ -56,181 +57,269 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
         title: const Text('New Job Offer'),
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              Row(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Entreprise',
-                      errorText:
-                          (_nameValidate) ? 'Veuillez entrer un nom' : null,
-                      border: const OutlineInputBorder(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 4.0),
+                            child: TextFormField(
+                              controller: _nameController,
+                              decoration: InputDecoration(
+                                labelText: 'Entreprise',
+                                errorText: (_nameValidate)
+                                    ? 'Veuillez entrer un nom'
+                                    : null,
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: TextFormField(
+                              controller: _nameController,
+                              decoration: InputDecoration(
+                                labelText: 'Entreprise',
+                                errorText: (_nameValidate)
+                                    ? 'Veuillez entrer un nom'
+                                    : null,
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Entreprise',
-                      errorText:
-                          (_nameValidate) ? 'Veuillez entrer un nom' : null,
-                      border: const OutlineInputBorder(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 4.0),
+                            child: TextFormField(
+                              controller: _nameController,
+                              decoration: InputDecoration(
+                                labelText: 'Entreprise',
+                                errorText: (_nameValidate)
+                                    ? 'Veuillez entrer un nom'
+                                    : null,
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: TextFormField(
+                              controller: _nameController,
+                              decoration: InputDecoration(
+                                labelText: 'Entreprise',
+                                errorText: (_nameValidate)
+                                    ? 'Veuillez entrer un nom'
+                                    : null,
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 4.0),
+                            child: TextFormField(
+                              controller: _nameController,
+                              decoration: InputDecoration(
+                                labelText: 'Entreprise',
+                                errorText: (_nameValidate)
+                                    ? 'Veuillez entrer un nom'
+                                    : null,
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: TextFormField(
+                              controller: _nameController,
+                              decoration: InputDecoration(
+                                labelText: 'Entreprise',
+                                errorText: (_nameValidate)
+                                    ? 'Veuillez entrer un nom'
+                                    : null,
+                                border: const OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "SÉLECTIONNEZ VOTRE STATUT :",
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Card(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Radio(
+                          value: 0,
+                          groupValue: _radioStatus,
+                          onChanged: _handleStatusRadioButtons,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Cadre (25%)',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                        ),
+                        Radio(
+                          value: 1,
+                          groupValue: _radioStatus,
+                          onChanged: _handleStatusRadioButtons,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Non cadre (22%)',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 4.0),
-                  child: TextFormField(
-                    controller: _salaryController,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                      labelText: 'Salaire Annuel Brut',
-                      errorText: (_salaryValidate)
-                          ? 'Veuillez entrer un salaire'
-                          : null,
-                      border: const OutlineInputBorder(),
-                      suffixIcon: const Icon(
-                        Icons.euro_symbol,
-                      ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Slider(
+                    value: _sliderValue,
+                    min: 0,
+                    max: 100,
+                    label: _sliderValue.round().toString(),
+                    onChanged: (value) {
+                      setState(() {
+                        _sliderValue = value;
+                      });
+                    },
+                  ),
+                  Card(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Radio(
+                          value: 0,
+                          groupValue: _radioStatus,
+                          onChanged: _handleStatusRadioButtons,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Cadre (25%)',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                        ),
+                        Radio(
+                          value: 1,
+                          groupValue: _radioStatus,
+                          onChanged: _handleStatusRadioButtons,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Non cadre (22%)',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Radio(
-                      value: 0,
-                      groupValue: _radioStatus,
-                      onChanged: _handleStatusRadioButtons,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Cadre (25%)',
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                    ),
-                    Radio(
-                      value: 1,
-                      groupValue: _radioStatus,
-                      onChanged: _handleStatusRadioButtons,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Non cadre (22%)',
-                        style: TextStyle(
-                          fontSize: 16.0,
+                  Slider(
+                    value: _sliderValue,
+                    min: 0,
+                    max: 100,
+                    label: _sliderValue.round().toString(),
+                    onChanged: (value) {
+                      setState(() {
+                        _sliderValue = value;
+                      });
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: TextFormField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            labelText: 'Entreprise',
+                            errorText: (_nameValidate)
+                                ? 'Veuillez entrer un nom'
+                                : null,
+                            border: const OutlineInputBorder(),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: TextFormField(
-                  controller: _detailsController,
-                  minLines: 4,
-                  maxLines: 10,
-                  keyboardType: TextInputType.multiline,
-                  decoration: const InputDecoration(
-                    labelText: 'Details',
-                    border: OutlineInputBorder(),
+                      Flexible(
+                        child: TextFormField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            labelText: 'Entreprise',
+                            errorText: (_nameValidate)
+                                ? 'Veuillez entrer un nom'
+                                : null,
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_nameController.text.isEmpty) {
-                        _nameValidate = true;
-                      }
-
-                      if (_salaryController.text.isEmpty) {
-                        _salaryValidate = true;
-                      }
-                    },
-                    child: const Text("Valider"),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Exercice 4'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Text(
-                    'Your job history is empty',
-                    style: TextStyle(fontSize: 20),
-                  )
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xff03dac6),
-        foregroundColor: Colors.black,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const NewJobOfferPage()),
-          );
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
