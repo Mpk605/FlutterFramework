@@ -78,7 +78,8 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
   // TextEditControllers
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _annualSalaryController = TextEditingController();
-  final TextEditingController _monthlySalaryController = TextEditingController();
+  final TextEditingController _monthlySalaryController =
+      TextEditingController();
   final TextEditingController _detailsController = TextEditingController();
 
   var _nameValidate = false;
@@ -91,7 +92,10 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
   int _radioStatus = 0;
 
   void _handleStatusRadioButtons(int? value) {
-    _monthlySalaryController.text = ((int.parse(_annualSalaryController.text) * ((value == 0) ? 0.75 : 0.78)) / 12).toString();
+    _monthlySalaryController.text = ((int.parse(_annualSalaryController.text) *
+                ((value == 0) ? 0.75 : 0.78)) /
+            12)
+        .toString();
 
     setState(() {
       _radioStatus = value ?? 0;
@@ -106,7 +110,9 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
 
     _nameController.text = widget.companyName;
     _annualSalaryController.text = widget.annualSalary.toString();
-    _monthlySalaryController.text = ((widget.annualSalary * ((widget.status == 0) ? 0.75 : 0.78)) / 12).toString();
+    _monthlySalaryController.text =
+        ((widget.annualSalary * ((widget.status == 0) ? 0.75 : 0.78)) / 12)
+            .toString();
     _detailsController.text = widget.details;
   }
 
@@ -142,7 +148,10 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
                         child: TextFormField(
                           controller: _annualSalaryController,
                           onChanged: (text) {
-                            _monthlySalaryController.text = ((int.parse(text) * ((_radioStatus == 0) ? 0.75 : 0.78)) / 12).toString();
+                            _monthlySalaryController.text = ((int.parse(text) *
+                                        ((_radioStatus == 0) ? 0.75 : 0.78)) /
+                                    12)
+                                .toString();
                           },
                           keyboardType: TextInputType.number,
                           inputFormatters: [
@@ -167,7 +176,10 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
                         child: TextFormField(
                           controller: _monthlySalaryController,
                           onChanged: (text) {
-                            _annualSalaryController.text = ((int.parse(text) / ((_radioStatus == 0) ? 0.75 : 0.78)) * 12).toString();
+                            _annualSalaryController.text = ((int.parse(text) /
+                                        ((_radioStatus == 0) ? 0.75 : 0.78)) *
+                                    12)
+                                .toString();
                           },
                           keyboardType: TextInputType.number,
                           inputFormatters: [
@@ -264,7 +276,8 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
                               widget.position,
                               JobOffer(
                                   companyName: _nameController.text,
-                                  salary: int.parse(_annualSalaryController.text),
+                                  salary:
+                                      int.parse(_annualSalaryController.text),
                                   status: _radioStatus,
                                   details: _detailsController.text));
                         }
