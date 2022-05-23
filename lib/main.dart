@@ -1,13 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   runApp(const MyApp());
 }
 
@@ -292,53 +285,6 @@ class _CreateNewJobOfferPageState extends State<NewJobOfferPage> {
                 ),
               ],
             ),
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Sauvegarder'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: _nameController,
-                        onChanged: (text) => _updateTextFields(),
-                        decoration: const InputDecoration(
-                          label: Text('Entrez un nom'),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: OutlinedButton(
-                        onPressed: () {
-                          var db = FirebaseFirestore.instance;
-                          final job = <String, String>{
-                            'hourlyBrut': _hourlyBrutController.text,
-                            'name': _nameController.text,
-                            'nbHours': _workHoursSliderValue.toString(),
-                            'nbMonths': _radioMonthNb.toString(),
-                            'status': _radioStatus.toString(),
-                            'taxRate': _rateSliderValue.toString()
-                          };
-
-                          db
-                              .collection('Jobs')
-                              .doc(_nameController.text)
-                              .set(job);
-                        },
-                        child: const Text('SAUVEGARDER'),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            )
           ],
         ),
       ),
